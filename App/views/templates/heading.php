@@ -9,10 +9,15 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
+                        <?php if(checkS("user", $_SESSION['user'])){?>
+                            <a class="nav-link active" aria-current="page" href="index.php?action=mail-list">Home</a>
+                        
+                        <?php }else{ ?>
                         <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                        <?php } ?>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?action=users-lis">Users</a>
+                        <a class="nav-link" href="index.php?action=users-list">Users</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="#">Browser</a>

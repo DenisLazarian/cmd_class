@@ -32,11 +32,11 @@ error_reporting(E_ALL & ~E_WARNING);
 
 
 
-<?php if(checkGetController("action", $action) && $action === 'login'){  // template form login  ?>
+<?php if(checkG("action", $action) && $action === 'login'){  // template form login  ?>
     <?php 
         include "App/views/users/log_user_form.php";
     ?>
-<?php }elseif(checkGetController("action", $action) && $action === 'register'){ // template form registre ?>
+<?php }elseif(checkG("action", $action) && $action === 'register'){ // template form registre ?>
     <?php 
         include "App/views/users/reg_user_form.php";
     ?>

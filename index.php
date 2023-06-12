@@ -27,57 +27,78 @@ include_once "app/helpers/personal_helper.php";
 
 /********* MANAGE ROUTES AND ACTIONS **************************/
 
-
-
-if (checkGetController("action", "users")) //mostra una pagina concreta
+if (checkG("action", "users")) //mostra una pagina concreta
 {
   $usr=new Ctl_users();
   $usr->users_list();
 
-}elseif(checkGetController("action", "login")) { // formulario de login
+}elseif(checkG("action", "login")) { // formulario de login
   // $usr=new Ctl_users();
   // $main->default_page("login");
   $main=new Ctl_main();
   $main->default_page("login");
 
   // $usr->user();
-}elseif(checkGetController("action", "logout")) {
+}elseif(checkG("action", "logout")) {
   $usr=new Ctl_users();
   $usr->logout();
 
-}elseif(checkGetController("action", "register")) { // formulario de registro
+}elseif(checkG("action", "register")) { // formulario de registro
   $main=new Ctl_main();
   $main->default_page("register");
 
-}elseif(checkGetController("action", "attempt_register")) { // proceso de registro
+}elseif(checkG("action", "attempt_register")) { // proceso de registro
   
   $usr=new Ctl_users();
   $usr->attempt_register();
 
-}elseif(checkGetController("action", "attempt_login")) { // proceso de login
+}elseif(checkG("action", "attempt_login")) { // proceso de login
   
   $usr=new Ctl_users();
   $usr->attempt_login();
 
-}elseif(checkGetController("action", "mail-list")) { // Portal privado de usuario
+}elseif(checkG("action", "mail-list")) { // Portal privado de usuario
   // echo "mail-list";
   $mail=new Ctl_mail();
   $mail->mail_list('mail-list');
 
-}elseif(checkGetController("action", "redactar_mail")) { // Portal privado de usuario
+}elseif(checkG("action", "redactar_mail")) { // Portal privado de usuario
   // echo "mail-list";
   $mail=new Ctl_mail();
   $mail->new_mail();
 
-}elseif(checkGetController("action", "show_mail")) { // Portal privado de usuario
+}elseif(checkG("action", "show_mail")) { // Portal privado de usuario
   // echo "mail-list";
   $mail=new Ctl_mail();
   $mail->show_mail($_GET['id']);
 
 
-}elseif(isset($_POST['action'] ) && $_POST['action'] == "respond_mail") { // Portal privado de usuario
+}elseif(isset($_POST['action']) && $_POST['action'] == "respond_mail") { // Portal privado de usuario
   $mail=new Ctl_mail();
   $mail->respond_mail($_GET['emisor_id']);
+  
+}elseif(checkG("action", "users-list")) { // Gestor de usuarios
+  $mail=new Ctl_users();
+  $mail->users_list();
+
+
+}elseif(checkP("action", "create_user")) { // Gestor de usuarios
+  $user=new Ctl_users();
+  $user->create_user();
+
+}elseif(checkP("action", "delete_user")) { // Gestor de usuarios
+  $user=new Ctl_users();
+  $user->delete_user($_POST['id']);
+
+
+}elseif(checkG("action", "edit_user")) { // Gestor de usuarios
+  $user=new Ctl_users();
+  $user->edit($_GET['id']);
+
+
+}elseif(checkP("action", "update_user")) { // Gestor de usuarios
+  $user=new Ctl_users();
+  $user->update_user($_POST['id']);
 
 } else { //Si no existeix GET o POST -> mostra la pagina principal
   $main=new Ctl_main();

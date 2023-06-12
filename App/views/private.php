@@ -30,25 +30,43 @@ defined('MVC_APP') or die('Permission denied');
 ?>
 
 <div class="container mt-4">
-    <?php if(isset($action) && $action == 'mail-list'){  // template form login  ?>
-        <?php
-            include "App/views/mails/index.php";
-        ?>
-    <?php }elseif(checkGetController("action", "show_mail")){ // template form registre ?>
-        <?php 
-            include "App/views/mails/show.php";
-        ?>
-    <?php }else{?>
-        <div class=" mt-4 container">
-            <h1>DLazaMail</h1>
-        <div>
-                <!-- <a href="index.php?action=users">Llista usuaris</a> -->
+
+
+<?php if(isset($action) && $action == 'mail-list'){  // template form login  ?>
+    <?php
+        include "App/views/mails/index.php";
+    ?>
+<?php }elseif(checkG("action", "show_mail")){ // template form registre ?>
+    <?php 
+        include "App/views/mails/show.php";
+    ?>
+
+<?php }elseif(checkG("action", "users-list")){ // template form registre 
+
+        include "App/views/users/index.php";
+    ?>
+
+
+<?php }elseif(checkG("action", "edit_user")){ // template form registre ?>
+    <?php 
+        include "App/views/users/edit.php";
+    ?>
+<?php }else{?>
+    <div class="mt-4 container">
+        <h1>DLazaMail</h1>
+    <div>
+            <!-- <a href="index.php?action=users">Llista usuaris</a> -->
+    </div>
+        <div class="mt-4">
+            Bienvenido a mi servicio de correo electrónico "DLazaMail". En este servició se podrá registrar y enviar correos electrónicos a otros usuarios registrados en el servicio, entre otras funcionalidades.
         </div>
-            <div class="mt-4">
-                Bienvenido a mi servicio de correo electrónico "DLazaMail". En este servició se podrá registrar y enviar correos electrónicos a otros usuarios registrados en el servicio, entre otras funcionalidades.
-            </div>
-        </div>
-    <?php }?>
+    </div>
+<?php }?>
+
+
+
+
+
 </div>
 
 <?php 

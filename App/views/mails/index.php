@@ -61,31 +61,31 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog">
     <div class="modal-content">
-    <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo mensaje</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <form action="index.php?action=redactar_mail" method="post">
-        <div class="modal-body">
-            <input type="hidden" name="send-message" value="1">
-            <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Destinatario:</label>
-                <input type="mail" required name="destinatario" class="form-control" id="recipient-name">
-            </div>
-            <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Asunto:</label>
-                <input required type="text" name="asunto" class="form-control" id="recipient-name">
-            </div>
-            <div class="mb-3">
-                <label for="message-text" class="col-form-label">Cuerpo:</label>
-                <textarea name="body" class="form-control" id="message-text"></textarea>
-            </div>
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo mensaje</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Send message</button>
-        </div>
-    </form>
+        <form action="index.php?action=redactar_mail" method="post">
+            <div class="modal-body">
+                <input type="hidden" name="send-message" value="1">
+                <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">Destinatario:</label>
+                    <input type="mail" required name="destinatario" class="form-control" id="recipient-name">
+                </div>
+                <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">Asunto:</label>
+                    <input required type="text" name="asunto" class="form-control" id="recipient-name">
+                </div>
+                <div class="mb-3">
+                    <label for="message-text" class="col-form-label">Cuerpo:</label>
+                    <textarea name="body" class="form-control" id="message-text"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Send message</button>
+            </div>
+        </form>
     </div>
 </div>
 </div>
