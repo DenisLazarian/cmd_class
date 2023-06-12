@@ -29,7 +29,11 @@ defined('MVC_APP') or die('Permission denied');
     include_once "App/views/templates/heading.php"; 
 ?>
 
+
 <div class="container mt-4">
+    <a href="index.php?action=activate-FA"  class="p-3 btn btn-primary">
+        Activar 2FA
+    </a>
 
 
 <?php if(isset($action) && $action == 'mail-list'){  // template form login  ?>

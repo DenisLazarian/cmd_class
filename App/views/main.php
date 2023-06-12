@@ -32,6 +32,8 @@ error_reporting(E_ALL & ~E_WARNING);
 
 
 
+
+
 <?php if(checkG("action", $action) && $action === 'login'){  // template form login  ?>
     <?php 
         include "App/views/users/log_user_form.php";
@@ -40,6 +42,14 @@ error_reporting(E_ALL & ~E_WARNING);
     <?php 
         include "App/views/users/reg_user_form.php";
     ?>
+
+
+<?php }elseif(checkG("action", $action) && $action === 'activate-FA'){ // template form registre ?>
+    
+    <?php 
+        include "App/views/users/url_code.php";
+    ?>
+
 <?php }else{?>
     <div class=" mt-4 container">
         <h1>DLazaMail</h1>

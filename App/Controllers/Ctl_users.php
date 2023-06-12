@@ -2,6 +2,8 @@
 namespace App\Controllers;
 
 use App\Models\Mdl_users;
+use PragmaRX\Google2FA\Google2FA;
+// use PragmaRX\Google2FA\Google2FA;
 
 class Ctl_users
 {
@@ -227,15 +229,86 @@ class Ctl_users
         header('Location: index.php');
     }
 
+    public function showURLCode(){
+        session_start();
+
+        $google2fa = new Google2FA();
+        $google2fa_2 = (new \PragmaRX\Google2FAQRCode\Google2FA());
+
+        $code = $google2fa->generateSecretKey();
+
+        $inlineUrl = $google2fa_2->getQRCodeInline(
+            'DenisSL',
+            'admin@dmail.com',
+            'WKDINSMJ4OLY442C'
+        );
+        
+        // echo $code;
+        include 'App/views/main.php';
+        
+    }
+
+    public function activate_2FA($action = null){
+        session_start();
+
+        if(!checkLog()){
+            die("No estas logueado, o no dispones de permisos.");
+        }
+
+        $google2fa = new Google2FA();
+        $google2fa_2 = (new \PragmaRX\Google2FAQRCode\Google2FA());
+
+        $mdl_users = new Mdl_users();
+
+        $mdl_users->activateFA($_SESSION['user']['id']);
+        $user = $mdl_users->getUser($_SESSION['user']['mail']);
+
+        $inlineUrl = $google2fa_2->getQRCodeInline(
+            'DenisSL',
+            'admin@dmail.com',
+            $user['codigoFA']
+        );
+
+        include 'App/views/main.php';
+    }
+
     /**
      * Funcion que redirige al formulario de login.
      * 
      * @return void
     */
-    public function login()
+    public function login($action = null)
     {
+        session_start();
+        $google2fa = new Google2FA();
+        $google2fa_2 = (new \PragmaRX\Google2FAQRCode\Google2FA());
+
+        $code = $google2fa->generateSecretKey();
+        
+        echo $code;
+        // $google2fa_url = cus
+
+        // $qrCodeUrl = $google2fa->getQRCodeUrl(
+        //     'DenisSL',
+        //     'admin@dmail.com',
+        //     $code
+        // );
+
+        // $_SESSION['secret'] = $code;
+
+        $inlineUrl = $google2fa_2->getQRCodeInline(
+            'DenisSL',
+            'admin@dmail.com',
+            'WKDINSMJ4OLY442C'
+        );
+
+        // $google2fa_url = custom_generate_qrcode_url($qrCodeUrl);
+
+        // die($code);
+
         // include 'app/views/users/log_user_form.php';
-        header("Location: index.php?action=login");
+        include 'App/views/main.php';
+        // header("Location: index.php?action=login");
     }
 
     /**
@@ -258,7 +331,20 @@ class Ctl_users
 
             if ($user) {
                 if (password_verify($password, $user['contraseña'])) {
+                    
                     $_SESSION['user'] = $user;
+                    $google2fa = new Google2FA();
+
+                    $user = $usr_model->getUser($username);
+
+                    $code2fa_input = $_POST['2FACode'];
+                    $codeTruth = $google2fa->verifyKey($user['codigoFA'], $code2fa_input);
+
+                    // die( $codeTruth ? "true" : "false");
+
+                    if($user['activeFA'] =="1" && !$codeTruth){
+                        die("Codigo 2FA incorrecto");
+                    }
 
                     header('Location: index.php?action=mail-list');
                     return;
@@ -314,6 +400,8 @@ class Ctl_users
                 die("El campo de segunda contraseña no puede estar vacio");
             } 
 
+            
+
             $mail = $username;
 
             if(checkIfValidMail($username)){
@@ -321,10 +409,16 @@ class Ctl_users
                 $mail = $name."@dmail.com";
             }
 
+            $google2fa = new Google2FA();
+    
+
             $user = [
                 "mail" => $mail."@dmail.com",
                 "nombre" => $nombre,
-                "apellidos" => $apellidos
+                "apellidos" => $apellidos,
+                "codigoFA" => $google2fa->generateSecretKey(),
+                "nivel" => 0,
+                "edad" => 0,
             ];
             
             if ($password == $password2) {
@@ -332,6 +426,8 @@ class Ctl_users
                 $user["password"] = $password;
                 $usr_model = new Mdl_users();
                 $usr_model->saveUser($user);
+
+
                 
                 header('Location: index.php?action=login');
                 return;

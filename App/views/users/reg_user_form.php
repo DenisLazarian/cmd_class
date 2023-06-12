@@ -31,5 +31,11 @@
         <input required type="password" name="pass2" class="form-control" id="password2">
     </div>
 
+    <!-- <div class="mb-3">
+        <label for="codefa" class="form-label">Code:</label>
+        <input required type="text" name="codefa" class="form-control" id="password2">
+    </div> -->
+
+        
     <button type="submit" class="btn btn-primary w-100 p-2">Register</button>
 </form>

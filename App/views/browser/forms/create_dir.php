@@ -12,8 +12,6 @@
             <br>
             nombre: <input class="name" type="text" placeholder="Escribe el nombre de tu nuevo directorio" name="nuevoDir">
 
-            
-
             <input type="submit" name="enviar"> 
             <br>
             <br>
@@ -27,6 +25,7 @@
                     echo "<p class='text-danger'>El directorio que intenta crear, ya existe o no puede tener un nombre vació.</p>";
                 } 
                 $i=0;
+                
                 while($i!==0){
                     header("location: index.php?action=create_directory");
                     $i++;

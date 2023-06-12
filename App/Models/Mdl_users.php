@@ -111,15 +111,18 @@ class Mdl_users
             die("El usuario ya existe");
         }
 
-        $stmt = $this->db->prepare("INSERT INTO users (mail, contraseña, nombre, apellido, nivel, edat) VALUES (?, ?, ?, ?, ?, ?)");
+        
+
+        $stmt = $this->db->prepare("INSERT INTO users (mail, contraseña, nombre, apellido, nivel, edat, codigoFA) VALUES (?, ?, ?, ?, ?, ?, ?)");
     
-        $stmt->bind_param("ssssii", 
+        $stmt->bind_param("ssssiis", 
             $user["mail"],
             $user["password"],
             $user["nombre"],
             $user["apellidos"],
-            $user["nivel"],
-            $user["edad"]
+            $user['nivel'],
+            $user["edad"],
+            $user["codigoFA"]
         );
 
         $stmt->execute();
@@ -128,6 +131,25 @@ class Mdl_users
 
     public function delete_user($id){
         $stmt = $this->db->prepare("DELETE FROM users WHERE id = ?");
+        $stmt->bind_param("i", 
+            $id
+        );
+
+        $stmt->execute();
+        $stmt->close();
+        // $this->db->close();
+    }
+
+    public function activateFA($id){
+        
+        $codigoFA = $this->getUserById($id)['codigoFA'];
+        $stmt = "";
+        if($codigoFA == null || $codigoFA == "0"){
+            $stmt = $this->db->prepare("UPDATE users SET activeFA = 1  WHERE id = ?");
+        }else{
+            $stmt = $this->db->prepare("UPDATE users SET activeFA = 0  WHERE id = ?");
+        }
+
         $stmt->bind_param("i", 
             $id
         );

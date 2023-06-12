@@ -18,11 +18,15 @@ define('MVC_APP','APP');
 
 // Autoload via classe 
 require __DIR__ . '/Loader.php';
+require __DIR__ . '/vendor/autoload.php';
+
+
 Loader::init( );    // definir carpeta on cercar -> Loader::init(__DIR__.'/src' );
 
 
 include_once "app/config/db.php";
 include_once "app/helpers/personal_helper.php";
+
 
 
 
@@ -36,8 +40,8 @@ if (checkG("action", "users")) //mostra una pagina concreta
 }elseif(checkG("action", "login")) { // formulario de login
   // $usr=new Ctl_users();
   // $main->default_page("login");
-  $main=new Ctl_main();
-  $main->default_page("login");
+  $main=new Ctl_users();
+  $main->login('login');
 
   // $usr->user();
 }elseif(checkG("action", "logout")) {
@@ -101,7 +105,6 @@ if (checkG("action", "users")) //mostra una pagina concreta
   $user=new Ctl_users();
   $user->update_user($_POST['id']);
 
-
 }elseif(checkG("action", "browser")) { // Gestor de archivos
   $files=new Ctl_files();
   $files->index("browser");
@@ -127,6 +130,10 @@ if (checkG("action", "users")) //mostra una pagina concreta
 }elseif(checkG("action", "copy_item")) { // borrar elemento, carpeta o fichero, indiferentemente. Tambien los elementos de dentro
   $files=new Ctl_files();
   $files->copy_item();
+
+}elseif(checkG("action", "activate-FA")) { // borrar elemento, carpeta o fichero, indiferentemente. Tambien los elementos de dentro
+  $files=new Ctl_users();
+  $files->activate_2FA("activate-FA");
 
 } else { //Si no existeix GET o POST -> mostra la pagina principal
   $main=new Ctl_main();
