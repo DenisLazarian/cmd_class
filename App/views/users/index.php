@@ -34,14 +34,16 @@
                 </td>
                 <td>
                     <div class="d-flex gap-2">
-
                         <!-- <a href="index.php?action=show_user&id=<?=$user['id']?>" class="btn btn-primary"><i class="bi bi-eye"></i></a> -->
                         <a href="index.php?action=edit_user&id=<?=$user['id']?>" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
-                        <form action="index.php" method="post">
-                            <input type="hidden" name="id" value="<?=$user['id']; ?>">
-                            <input type="hidden" name="action" value="delete_user">
-                            <button onclick="return confirm('Estas seguro de borrar el usuario con correo <?=$user['mail']; ?>')" type="submit" role="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
-                        </form>
+                        
+                        <?php if($_SESSION['user']['id'] != $user['id']){?>
+                            <form action="index.php" method="post">
+                                <input type="hidden" name="id" value="<?=$user['id']; ?>">
+                                <input type="hidden" name="action" value="delete_user">
+                                <button onclick="return confirm('Estas seguro de borrar el usuario con correo <?=$user['mail']; ?>')" type="submit" role="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                            </form>
+                        <?php }?>
                     </div>
                 </td>
             </tr>

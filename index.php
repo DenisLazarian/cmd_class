@@ -100,6 +100,11 @@ if (checkG("action", "users")) //mostra una pagina concreta
   $user=new Ctl_users();
   $user->update_user($_POST['id']);
 
+
+}elseif(checkG("action", "browser")) { // Gestor de usuarios
+  $user=new Ctl_users();
+  $user->update_user($_POST['id']);
+
 } else { //Si no existeix GET o POST -> mostra la pagina principal
   $main=new Ctl_main();
   $main->default_page();

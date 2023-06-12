@@ -6,9 +6,22 @@ use App\Models\Mdl_users;
 class Ctl_users
 {
 
+    /**
+     * 
+     * Muestra la vista con el listado de usuarios
+     * 
+     * Solo para usuarios con rol de administrador.
+     * 
+     * @return void
+     * 
+    */
     public function users_list()
     {
         session_start();
+        if(!checkRole('admin')){
+            die("No estas logueado, o no dispones de permisos.");
+        }
+
         $usr_model=new Mdl_users();
 
         $info_guests = $usr_model->getAllGuests();
@@ -18,10 +31,21 @@ class Ctl_users
         include 'app/views/private.php';
     }
 
+    /**
+     * 
+     * Muestra el formulario de edicion de usuario.
+     * 
+     * Solo para usuarios con rol de administrador.
+     * 
+     * 
+     * @param int $id
+     * @return void
+     * 
+    */
     public function edit($id){
         session_start();
-        if(!checkLog()){
-            die("no estas logeado");
+        if(!checkRole('admin')){
+            die("No estas logueado, o no dispones de permisos.");
         }
 
         $usr_model=new Mdl_users();
@@ -31,10 +55,18 @@ class Ctl_users
         include 'app/views/private.php';
     }
 
+    /**
+     * Funcion que actualiza los datos de un usuario
+     * 
+     * Solo para usuarios con rol de administrador
+     * 
+     * @param int $id
+     * @return void
+    */
     public function update_user($id){
         session_start();
-        if(!checkLog()){
-            die("no estas logeado");
+        if(!checkRole('admin')){
+            die("No estas logueado, o no dispones de permisos.");
         }
 
         $level = $_POST['level'];
@@ -105,10 +137,17 @@ class Ctl_users
         }
     }
 
+    /**
+     * Funcion que crea un usuario desde el panel de administración.
+     * 
+     * Solo para usuarios con rol de administrador.
+     * 
+     * @return void
+    */
     public function create_user(){
         session_start();
-        if(!checkLog()){
-            die("no estas logeado");
+        if(!checkRole('admin')){
+            die("No estas logueado, o no dispones de permisos.");
         }
 
         $usr_model = new Mdl_users();
@@ -177,19 +216,33 @@ class Ctl_users
         return;
     }
 
-
+    /**
+     * Funcion que elimina la sessión y redirige al index.
+     * 
+     * @return void
+    */
     public function logout()
     {
         session_destroy();
         header('Location: index.php');
     }
 
+    /**
+     * Funcion que redirige al formulario de login.
+     * 
+     * @return void
+    */
     public function login()
     {
         // include 'app/views/users/log_user_form.php';
         header("Location: index.php?action=login");
     }
 
+    /**
+     * Función que processa la autenticación del usuario y establece la sessión de usuario.
+     * 
+     * @return void
+    */
     public function attempt_login(){
         session_start();
         $usr_model = new Mdl_users();
@@ -220,10 +273,21 @@ class Ctl_users
         return;
     }
 
+    /**
+     * Función que redirige al formulario de registro.
+     * 
+     * @return void
+    */
     public function register(){
         include "App/views/users/reg_user_form.php";
     }
 
+    /**
+     * Función que processa el registro del usuario y redirige a la pantalla de login.
+     * 
+     * @return void
+     * 
+    */
     public function attempt_register(){
         $for_get_user = new Mdl_users();
 
@@ -280,13 +344,26 @@ class Ctl_users
         return;
     }
 
+    /**
+     * Función para eliminar usuario des del panel de administración.
+     * 
+     * Solo para usuarios con rol de administrador.
+     * 
+     * @param int $id
+     * @return void
+    */
     public function delete_user($id){
         session_start();
-        if(!checkLog()){
-            die("no estas logeado");
+        if(!checkRole('admin')){
+            die("No estas logueado, o no dispones de permisos.");
+        }
+        $usr_model = new Mdl_users();
+
+        $user = $usr_model->getUserById($id);
+        if($_SESSION['user']['id'] == $user['id']){
+            die("No puedes borrar tu propio usuario, si estas autenticado con el mismo.");
         }
 
-        $usr_model = new Mdl_users();
         $usr_model->delete_user($id);
 
         header("Location: index.php?action=users-list");

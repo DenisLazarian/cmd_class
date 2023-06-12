@@ -16,9 +16,12 @@
                         <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         <?php } ?>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?action=users-list">Users</a>
-                    </li>
+
+                    <?php if(checkRole('admin')){?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?action=users-list">Users</a>
+                        </li>
+                    <?php }?>
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="#">Browser</a>
                     </li>
