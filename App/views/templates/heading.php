@@ -16,29 +16,29 @@
                         <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         <?php } ?>
                     </li>
-
                     <?php if(checkRole('admin')){?>
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?action=users-list">Users</a>
                         </li>
                     <?php }?>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="#">Browser</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="#">Messages</a>
-                    </li>
+                    <?php if(checkLog()){?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="index.php?action=browser">Browser</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="index.php?action=mail-list">Messages</a>
+                        </li>
+                    <?php }?>
                 </ul>
-                <?php if(checkS("user", $_SESSION['user'])){?>
+                <?php if(checkLog()){?>
                     <span class="me-3"><?=$_SESSION['user']['nombre']; ?></span>
                 <?php }?>
                 <div class="">
-                <?php if(checkS("user", $_SESSION['user'])){?>
+                <?php if(checkLog()){?>
                     <a href="index.php?action=logout" class="btn btn-danger"><i class="bi bi-box-arrow-left"></i> logout</a>
                 <?php }else{?>
                     <a href="index.php?action=login" class="btn btn-primary"><i class="bi bi-box-arrow-in-right"></i> login</a>
                     <a href="index.php?action=register" class="btn btn-warning">Registrarse</a>
-                
                 <?php }?>
                 </div>
             </div>

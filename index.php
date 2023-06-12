@@ -3,6 +3,7 @@
 use App\Controllers\Ctl_mail;
 use App\Controllers\Ctl_users;
 use App\Controllers\Ctl_main;
+use App\Controllers\Ctl_files;
 
 
 define('MVC_APP','APP');
@@ -101,9 +102,31 @@ if (checkG("action", "users")) //mostra una pagina concreta
   $user->update_user($_POST['id']);
 
 
-}elseif(checkG("action", "browser")) { // Gestor de usuarios
-  $user=new Ctl_users();
-  $user->update_user($_POST['id']);
+}elseif(checkG("action", "browser")) { // Gestor de archivos
+  $files=new Ctl_files();
+  $files->index("browser");
+
+}elseif(checkG("action", "create_directory")) { // Crear carpeta
+  $files=new Ctl_files();
+  $files->crear_carpeta("create_directory");
+
+
+}elseif(checkG("action", "create_file")) { // Crear archivo
+  $files=new Ctl_files();
+  $files->crear_fichero("create_file");
+
+
+}elseif(checkG("action", "delete_item")) { // borrar elemento, carpeta o fichero, indiferentemente. Tambien los elementos de dentro
+  $files=new Ctl_files();
+  $files->delete_item();
+
+}elseif(checkG("action", "zip")) { // borrar elemento, carpeta o fichero, indiferentemente. Tambien los elementos de dentro
+  $files=new Ctl_files();
+  $files->zip();
+
+}elseif(checkG("action", "copy_item")) { // borrar elemento, carpeta o fichero, indiferentemente. Tambien los elementos de dentro
+  $files=new Ctl_files();
+  $files->copy_item();
 
 } else { //Si no existeix GET o POST -> mostra la pagina principal
   $main=new Ctl_main();

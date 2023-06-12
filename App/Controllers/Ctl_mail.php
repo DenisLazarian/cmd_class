@@ -8,6 +8,10 @@ class Ctl_mail
 {
     public function mail_list($action = null){
         session_start();
+
+        if(!checkLog()){
+            die("necessita una session para acceder a esta pagina");
+        }
         
         $mail_model=new Mdl_mail();
         $user_model=new Mdl_users();
@@ -29,6 +33,10 @@ class Ctl_mail
 
     public function new_mail(){
         session_start();
+
+        if(!checkLog()){
+            die("necessita una session para acceder a esta pagina");
+        }
 
         $mail_model = new Mdl_mail();
         $user_model = new Mdl_users();
@@ -63,6 +71,10 @@ class Ctl_mail
     public function show_mail($id){
         session_start();
 
+        if(!checkLog()){
+            die("necessita una session para acceder a esta pagina");
+        }
+
         $mail_model = new Mdl_mail();
         $user_model = new Mdl_users();
 
@@ -88,9 +100,10 @@ class Ctl_mail
 
     public function respond_mail($id){
         session_start();
-        if(!$_SESSION['user']){
-            die("no dispone de permisos para esta accion");
+        if(!checkLog()){
+            die("necessita una session para acceder a esta pagina");
         }
+
         $mail_model = new Mdl_mail();
         $user_model = new Mdl_users();
 

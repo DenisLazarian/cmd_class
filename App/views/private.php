@@ -36,20 +36,34 @@ defined('MVC_APP') or die('Permission denied');
     <?php
         include "App/views/mails/index.php";
     ?>
-<?php }elseif(checkG("action", "show_mail")){ // template form registre ?>
+<?php }elseif(checkG("action", "show_mail")){ // template to show individual mail ?>
     <?php 
         include "App/views/mails/show.php";
     ?>
 
-<?php }elseif(checkG("action", "users-list")){ // template form registre 
+<?php }elseif(checkG("action", "users-list")){ // template user list 
 
         include "App/views/users/index.php";
     ?>
 
 
-<?php }elseif(checkG("action", "edit_user")){ // template form registre ?>
+<?php }elseif(checkG("action", "edit_user")){ // template form edit user administration ?>
     <?php 
         include "App/views/users/edit.php";
+    ?>
+
+<?php }elseif(checkG("action", "browser")){ // template browser ?>
+    <?php 
+        include 'app/views/browser/browser.php';
+    ?>
+<?php }elseif(checkG("action", "create_directory")){ // template browser ?>
+    <?php 
+        include 'app/views/browser/forms/create_dir.php';
+    ?>
+
+<?php }elseif(checkG("action", "create_file")){ // template browser ?>
+    <?php 
+        include 'app/views/browser/forms/create_file.php';
     ?>
 <?php }else{?>
     <div class="mt-4 container">
